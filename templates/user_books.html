@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>My books</h1>
+    {% if books %}
+        {% for bookinst in books %}
+    <hr>
+        <ul>
+            <li>
+                <strong class="{% if bookinst.is_overdue %}text-danger{% endif %}">Title: {{bookinst.book.title}}</strong>
+            </li>
+            <li>
+                <strong>Due back:</strong> {{bookinst.due_back}}
+            </li>
+            <li>
+                <strong>Status:</strong> {{bookinst.get_status_display}}
+            </li>
+        <br/>
+        {% if user.is_superuser %}
+        <a class="btn btn-primary" href="{% url 'my-book-update' bookinst.id %}">Edit</a>
+        <a class="btn btn-primary" href="{% url 'my-book-delete' bookinst.id %}">Delete</a>
+        {% elif bookinst.status == 'r' %}
+        <a class="btn btn-primary" href="{% url 'my-book-update-3' bookinst.id %}">Cancel reservation</a>
+         {% endif %}
+      </li>
+
+    </ul>
+{% endfor %}
+    {% else %}
+      <p>There are no books borrowed.</p>
+    {% endif %}
+{% endblock %}

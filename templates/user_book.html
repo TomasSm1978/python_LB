@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>My borrowed book:</h1>
+    <hr>
+        <ul>
+        <img class="rounded-circle" src="{{object.reader.profilis.nuotrauka.url}}">
+        <li><strong class="{% if object.is_overdue %}text-danger{% endif %}">Title: {{object.book.title}}</strong></li>
+        <li><strong>Due back:</strong> {{object.due_back}}</li>
+            {% if object.reader == user %}
+            <div>
+                <a class="btn btn-primary" href="{% url 'my-book-update' object.id %}">Edit</a>
+                <a class="btn btn-primary" href="{% url 'my-book-delete' object.id %}">Delete</a>
+            </div>
+            {% endif %}
+        <br/>
+      </li>
+    </ul>
+{% endblock %}
