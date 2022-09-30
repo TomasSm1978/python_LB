@@ -2,10 +2,13 @@
 
 {% block content %}
   <h1>Authors</h1>
-  <p>List of our books authors:</p>
   {% for a in authors %}
-   <li>
-     <a href="{% url 'author' a.id %}">{{a.first_name}} {{a.last_name}}</a>
-   </li>
+    <hr>
+    <li>
+     <p>{{a.first_name}} {{a.last_name}}:</p>
+    </li>
+    {% for i in a.books.all %}
+    {{ i.title }}
+    {% endfor %}
     {% endfor %}
 {% endblock %}
